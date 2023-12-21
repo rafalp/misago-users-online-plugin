@@ -1,0 +1,44 @@
+{% extends "misago/base.html" %}
+{% load i18n misago_batch %}
+
+
+{% block title %}
+  {% trans "Users online" context "users online plugin" %} | {{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+<div class="page page-users-online">
+  <div class="container page-header-container">
+    <div class="page-header page-header-users-online">
+      <div class="page-header-bg-image">
+        <div class="page-header-bg-overlay">
+          <div class="page-header-image"></div>
+          <div class="page-header-banner page-header-banner-users-online">
+            <div class="page-header-banner-bg-image">
+              <div class="page-header-banner-bg-overlay">
+                <h1>{% trans "Users online" context "users online plugin" %}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container page-container">
+    {% for row in users_online|batch:4 %}
+      <div class="row">
+        {% for user_online in row %}
+          <div class="col-xs-12 col-md-3">
+            <a href="{{ user_online.user.get_absolute_url }}" class="item-title">{{ user_online.user }}</a>
+            <br />
+            <span misago-timestamp="{{ user_online.last_click.isoformat }}">
+              {{ user_online.last_click|date:"DATETIME_FORMAT" }}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

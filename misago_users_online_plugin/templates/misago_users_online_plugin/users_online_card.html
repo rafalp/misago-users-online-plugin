@@ -1,0 +1,13 @@
+{% load i18n %}
+<div class="panel panel-default panel-users-online">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <a href="{% url 'users-online-plugin:index' %}">{% trans "Users online" context "users online plugin" %}</a>
+        </h3>
+    </div>
+    <div class="panel-body">
+        {% for online in users_online %}
+            <a href="{{ online.user.get_absolute_url }}" class="item-title">{{ online.user }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </div>
+</div>
